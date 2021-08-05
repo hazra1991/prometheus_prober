@@ -42,7 +42,7 @@ class BaseProber:
 
 class ProberScheduler:
     """A scheduler that runs probers."""
-    def __init__(self, *probers: BaseProber):
+    def __init__(self, probers: BaseProber):
         # self._logger = logging.getLogger(self.__class__.__name__)
         self._probers = probers
         self._shutdown = threading.Event()

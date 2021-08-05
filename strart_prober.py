@@ -1,23 +1,12 @@
 
-from prometheus_client import CollectorRegistry, start_http_server
+#!/usr/bin/env python3
+
+from prometheus_client import start_http_server
 from src.probe_scheduler import ProberScheduler
-from src.prober_test import Prober
-from src.metric import Metrics
+from prober_init import PROBER_LIST,registry1 ,registry2
 
-
-registry = CollectorRegistry(auto_describe=True)
-
-probers = [
-        Prober(
-            name = "prober1",
-            interval = 3,
-            metric=Metrics(registry),
-            
-        ),
-        # Prober()
-    ]
-
-scheduler = ProberScheduler(*probers)
+scheduler = ProberScheduler(PROBER_LIST)
 # logger.info('starting metrics endpoint')
-start_http_server(8000, registry=registry)
+start_http_server(8000, registry=registry1)
+start_http_server(8002, registry=registry2)
 scheduler.start()
