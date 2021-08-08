@@ -6,15 +6,20 @@ from .utils import Timer
 
 class BaseProber:
 
-    def __init__(self, name, interval: float = 0.0):
+    def __init__(self, name, metric, interval: float = 0.0):
 
         self._name = name
         self._interval = interval
+        self._metric = metric.get_defined_metrices
         self._logger = logging.getLogger(name)
         self._thread = threading.Thread(target=self.run)
         self._thread.daemon = True
         self._scheduler = None
         self._event = threading.Event()
+
+    @property
+    def get_defined_metric(self):
+        return self._metric
 
     def register(self, scheduler):
         """Registers this prober with a scheduler."""

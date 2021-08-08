@@ -3,16 +3,16 @@ from .probe_scheduler import BaseProber
 
 
 
-class Prober(BaseProber):
+class AvailibilityProber(BaseProber):
  
     def __init__(self,name , interval , metric):
-        print(metric)
-        metric = metric.get_defined_metrics
-        self.counter = metric["counter"]
-        super().__init__(name,interval)
+        super().__init__(name,metric,interval)
+        print(self.get_defined_metric)
+        metric = self.get_defined_metric
+        self.success =  metric["pypi_success_total"]
+        self.failed =  metric["pypi_failed_total"]
+        
 
-
-    # pylint: disable=broad-except
     def probe(self):
         print("runnint")
 
@@ -20,30 +20,6 @@ class Prober(BaseProber):
         if res.status_code == 200:
             print("this is started ")
             # logger()
-            self.counter.labels("succeeded").inc()
+            self.success.inc()
         else:
-            self.counter.labels("Failed").inc()
-
-
-class Prober(BaseProber):
- 
-    def __init__(self,name , interval , metric):
-        print(metric)
-        metric = metric.get_defined_metrics
-        self.counter = metric["counter"]
-        super().__init__(name,interval)
-
-
-    # pylint: disable=broad-except
-    def probe(self):
-        print("runnint")
-
-        res  = requests.post("http://127.0.0.1:5000/upload")
-        if res.status_code == 200:
-            print("this is started ")
-            # logger()
-            self.counter.labels("succe").inc()
-        else:
-            self.counter.labels("Fai").inc()
-
-        
+            self.failed.inc()

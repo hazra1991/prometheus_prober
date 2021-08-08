@@ -53,7 +53,7 @@ class Base(metaclass=MetricMeta):
         return self.__collection_registry
     
     @property
-    def get_defined_metrics(self)-> dict:
+    def get_defined_metrices(self)-> dict:
         return self.__plugged_metrics
 
     @classmethod
