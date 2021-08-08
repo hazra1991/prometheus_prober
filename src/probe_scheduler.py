@@ -2,9 +2,10 @@ import logging
 import threading
 
 from .utils import Timer
+from abc import ABC,abstractmethod
 
 
-class BaseProber:
+class BaseProber(ABC):
 
     def __init__(self, name, metric, interval: float = 0.0):
 
@@ -29,7 +30,7 @@ class BaseProber:
         """Start the prober."""
         self._logger.info(f'starting {self._name}')
         self._thread.start()
-
+    @abstractmethod
     def probe(self):
         """The main probe logic should be deined here"""
         raise NotImplementedError('virtual method')

@@ -60,8 +60,11 @@ PROBER_LIST = [
 ```
 * Schedule the prober and start the http server as shown below.
 ```python
+from prometheus_client import start_http_server
+from src.probe_scheduler import ProberScheduler
 from prober_init import PROBER_LIST,Availibility_collection
 
 scheduler = ProberScheduler(PROBER_LIST)
-start_http_server(8000, registry=Availibility_collection)
+start_http_server(port=8000,addr='localhost',registry=Availibility_collection)
+scheduler.start()
 ```
