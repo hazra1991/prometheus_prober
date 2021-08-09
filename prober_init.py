@@ -17,7 +17,7 @@ Availibility_collection = CollectorRegistry(auto_describe=True)
 doc = 'Collection metric endpoint for PYPI uploader service'
 Info(name="PYPI_upload_service", documentation=doc, registry=Availibility_collection).info({
         'source': __file__,
-        'version': env.prober_version
+        'version': env.__version__
     })
 
 
@@ -31,7 +31,7 @@ PROBER_LIST = [
 
         AvailibilityProber(
             name = "Availibility_prober",
-            interval = 6,
+            interval = 16,
             metric=Metrics(Availibility_collection),
             
         )
