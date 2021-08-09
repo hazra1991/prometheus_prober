@@ -8,4 +8,6 @@ gitlab_api_url = "https://gitlab.com/api/v4/"
 gitlab_access_token = ""
 gitlab_trigger_token = ""
 gitlab_project_id = 27281625
-gitlab_job_id : int
+gitlab_job_id : int = 1489184163
+control_only:bool = True
+gitlab_instance:str

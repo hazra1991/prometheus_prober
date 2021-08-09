@@ -31,7 +31,7 @@ PROBER_LIST = [
 
         AvailibilityProber(
             name = "Availibility_prober",
-            interval = 16,
+            interval = 6,
             metric=Metrics(Availibility_collection),
             
         )

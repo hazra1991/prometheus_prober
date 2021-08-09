@@ -1,4 +1,5 @@
 import time
+from functools import wraps
 
 class Timer:
     """A context manager that measure the duration of it's with block."""
@@ -31,3 +32,24 @@ class Timer:
 
     def __exit__(self, typ, value, traceback):
         self.stop()
+
+
+def retryOnException(ExceptionToCheck, retry=2, delay=2, logger=None):
+    def decorator(fun):
+        @wraps(fun)
+        def inner(*a ,**kw):
+            mretry, mdelay = retry, delay
+            while mretry > 1:
+                try:
+                    return fun(*a, **kw)
+                except ExceptionToCheck as e:
+                    msg = f"{str(e)}, Retrying in {mdelay} seconds..."
+                    if logger:
+                        logger.warning(msg)
+                    else:
+                        print(msg)
+                    time.sleep(mdelay)
+                    mretry -= 1
+            return None
+        return inner
+    return decorator
