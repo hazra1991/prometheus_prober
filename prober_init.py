@@ -1,38 +1,39 @@
-from src.prober_def import AvailibilityProber
+from src.prober_def import AvailabilityProber
 from src.metric import Metrics
-from prometheus_client import CollectorRegistry,Info
+from prometheus_client import CollectorRegistry, Info
 import env
 
-######################################
-## Define the collection registries ##
-######################################
+#####################################
+# Define the collection registries ##
+#####################################
 
-Availibility_collection = CollectorRegistry(auto_describe=True)
-# registry2 = CollectorRegistry(auto_describe=True)
+Availability_collection = CollectorRegistry(auto_describe=True)
 
 ##########################################
 # Set meta INFO on Collection registries #
 ##########################################
 
 doc = 'Collection metric endpoint for PYPI uploader service'
-Info(name="PYPI_upload_service", documentation=doc, registry=Availibility_collection).info({
+Info(name="PYPI_upload_service", documentation=doc, registry=Availability_collection).info({
         'source': __file__,
         'version': env.__version__
     })
 
 
-######################################
-## Create  probers to be scheduled  ## 
-######################################
+#####################################
+# Create  probers to be scheduled  ##
+#####################################
 
 # Create all the probers inside the PROBER_LIST
 
 PROBER_LIST = [
 
-        AvailibilityProber(
-            name = "Availibility_prober",
-            interval = 6,
-            metric=Metrics(Availibility_collection),
+        AvailabilityProber(
+            name="Availability_prober",
+            metric=Metrics(Availability_collection),
+            interval=300,
+            log_dir=env.log_dir
             
         )
+
 ]

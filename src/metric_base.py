@@ -4,12 +4,14 @@ import inspect
 
 # CAUTION DONOT ALTER THIS FILE !!!
 
+
 class MetricMeta(type):
     """Meta class for all the Metric defined,Need to run clear_base_instance before customising the base class"""
 
     __base_formed = False
-    __base_instance =  None
-    def __new__(cls,name,base,dic):
+    __base_instance = None
+
+    def __new__(cls, name, base, dic):
         if len(base) > 0 and  cls.__base_formed:
             if cls.__base_instance is base[0]:
                 if "__init__" in dic or "__new__" in dic or "__slots__" in dic:
@@ -26,7 +28,6 @@ class MetricMeta(type):
             cls.__base_formed =  True
             cls.__base_instance = super().__new__(cls,name,base,dic)
             return cls.__base_instance
-
 
     @classmethod
     def clear_base_instance(cls):
@@ -64,7 +65,6 @@ class Base(metaclass=MetricMeta):
     @classmethod
     def set_metric(cls,f):
         class_name = f.__qualname__[0:len(f.__qualname__) - (len(f.__name__) + 1)]
-        print(class_name)
         if class_name in cls.__metric_pool:
             cls_context = cls.__metric_pool[class_name]
         else:
@@ -75,7 +75,8 @@ class Base(metaclass=MetricMeta):
             cls_context[f.__name__] = f
         else:
             raise DuplicateMetric(f.__name__)
+
         @wraps(f)
-        def inner(*args,**kw):
-            return f(*args,**kw)
+        def inner(*args, **kw):
+            return f(*args, **kw)
         return inner

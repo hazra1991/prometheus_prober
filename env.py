@@ -1,13 +1,31 @@
 import os
+import json
+from pathlib import Path
+from all_env import __config__
 
-__version__ = "0.0.1"
-server_address = 'localhost'
+with open("PROJECT_SETTINGS.json", "r") as file:
+    conf = json.load(file)
+    proj_conf = conf['project_setting']
 
-## gitlab configs ## 
-gitlab_api_url = "https://gitlab.com/api/v4/"
-gitlab_access_token = ""
-gitlab_trigger_token = ""
-gitlab_project_id = 27281625
-gitlab_job_id : int = 1489184163
-control_only:bool = True
-gitlab_instance:str
+__version__ = proj_conf['version']
+server_address = proj_conf['server']
+server_port = proj_conf['port']
+control_only: bool = proj_conf['control_only']
+
+# Setting up environment
+
+pypi_upload_url = __config__['uploader_env'][proj_conf['uploader_env'].upper()]
+
+gitlab_api_url = __config__['gitlab_env'][proj_conf['gitlab_env'].upper()]['api']
+gitlab_instance = __config__['gitlab_env'][proj_conf['gitlab_env'].upper()]['instance']
+gitlab_project_access_token = __config__['gitlab_env'][proj_conf['gitlab_env'].upper()]['token']
+gitlab_project_id = proj_conf["project_id"]
+gitlab_job_id: int = proj_conf["job_id"]
+
+# logging
+if len(proj_conf["log_dir"].strip()) > 0:
+    log_dir = proj_conf["log_dir"]
+else:
+    log_dir = Path(os.path.dirname(__file__))/"LOGS"
+    log_dir.mkdir(parents=True, exist_ok=True)
+

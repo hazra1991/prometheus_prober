@@ -5,3 +5,5 @@ dummy*
 test*
 *test
 password
+*.bak
+LOGS/

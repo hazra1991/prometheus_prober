@@ -12,7 +12,7 @@ pip install prometheus_client
 
 ## General usage
 
-The main probers working are defined in the ```src/prober_def.py```, the metrices are defined in ```src/metric.py```, probers are instantiated and set in the ```prober_init.py```, and teh environment variables are defined int ```env.py```
+The main probers working are defined in the ```src/prober_def.py```, the metrices are defined in ```src/metric.py```, probers are instantiated and set in the ```prober_init.py```, and the environment variables are defined int ```env.py```,the peoject settings are in ```PROJECT_SETTINGS.json```
 
 * To define metrices, create a metric class or use exixting one inside the ```src/metric.py``` and add all the needed metric as a function with return type as a prometious metric instance.
 **All metric should inherit form ```probe_scheduler.Base``` and to set and activate the metric ```@Base.set_metric``` should be used. To get the collection registry use the property ```self.get_collection_registry```
