@@ -1,0 +1,17 @@
+{
+  "project_setting": {
+    "version": "1.0.0",
+    "pypi_uploader_env": "PYPI_UAT",
+    "gitlab_env": "GITLAB_AWS_QA",
+    "cred_loc": "CV",
+    "cref": "61d3dc4930d447a9b0864b744cdc70af",
+    "server": "",
+    "log_dir": "",
+    "control_only": false,
+    "port": 8000,
+    "project_id": {
+      "dcnds0266097": 337993
+    },
+    "job_id": 23017471
+  }
+}

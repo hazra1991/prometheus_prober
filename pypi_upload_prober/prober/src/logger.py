@@ -11,7 +11,7 @@ __all__ = ["get_logger"]
 
 def get_console_handler():
     """outputs to console for debugging"""
-    formatter = logging.Formatter("%(name)s — %(levelname)s — %(funcName)s:%(lineno)d — %(message)s")
+    formatter = logging.Formatter("%(name)s - %(levelname)s - %(funcName)s:%(lineno)d - %(message)s")
     console_handler = logging.StreamHandler(sys.stdout)
     console_handler.setFormatter(formatter)
     return console_handler
@@ -22,11 +22,11 @@ def get_file_error_handler(logger_name, log_dir, level, backup_cnt):
     if not os.path.isdir(log_dir):
         raise NotADirectoryError()
     log_file = Path(log_dir) / f"{logger_name}.log"
-    formatter = logging.Formatter("%(asctime)s — %(levelname)s — %(name)s -fun:- %(funcName)s — %(message)s")
+    formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(name)s - fun:- %(funcName)s - %(message)s")
     file_handler = TimedRotatingFileHandler(log_file, when='midnight', backupCount=backup_cnt)
     file_handler.setLevel(level)
     file_handler.setFormatter(formatter)
-    err_formatter = logging.Formatter("%(asctime)s — %(levelname)s — %(name)s — %(funcName)s:%(lineno)d — %(message)s")
+    err_formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(name)s - %(funcName)s:%(lineno)d - %(message)s")
     _err_file = log_file.parent / f'{logger_name}-ERROR.log'
     err_file_handler = TimedRotatingFileHandler(_err_file, when='midnight', backupCount=backup_cnt)
     err_file_handler.setLevel(logging.ERROR)
@@ -55,6 +55,3 @@ def get_logger(logger_name, level, log_dir=None, backup_count=15):
         logger.addHandler(get_console_handler())
     logger.propagate = False
     return logger
-
-
-
